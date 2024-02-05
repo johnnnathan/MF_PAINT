@@ -29,6 +29,7 @@ public class Main extends JFrame {
         InitializeButtons();
         jpanel.setLayout(boxLayout);
         frame.addMouseMotionListener(mouseAdapter);
+        Board.setDoubleBuffered(true);
 
         bRed.addComponentListener(componentListener);
         bBlue.addComponentListener(componentListener);

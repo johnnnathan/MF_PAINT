@@ -1,8 +1,8 @@
 import java.util.Random;
 public class Color_Node {
-    private int red;
-    private int green;
-    private int blue;
+    public int red;
+    public int green;
+    public int blue;
     public Color_Node(){
         Random random = new Random();
         red = random.nextInt(256);
@@ -33,6 +33,11 @@ public class Color_Node {
         this.red = red;
         this.blue = blue;
         this.green = green;
+    }
+    public Color_Node(int rbg){
+        this.red = rbg/1000000;
+        this.blue = (rbg%1000000)/1000;
+        this.green = rbg%1000;
     }
     public int getRed(){return red;}
 
