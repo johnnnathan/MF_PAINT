@@ -25,19 +25,26 @@ public class Color_Node {
                 red = 10;green = 100; blue = 200;
                 break;
             default:
-                red = 255;green = 255; blue = 255;
+                red = 0;green = 0; blue = 0;
         }
 
 
 
         this.red = red;
-        this.blue = blue;
         this.green = green;
+        this.blue = blue;
     }
     public Color_Node(int rbg){
         this.red = rbg/1000000;
-        this.blue = (rbg%1000000)/1000;
         this.green = rbg%1000;
+        this.blue = (rbg%1000000)/1000;
+
+    }
+    public Color_Node(int red, int green, int blue){
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+
     }
     public int getRed(){return red;}
 

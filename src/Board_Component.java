@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.math.*;
 
 public class Board_Component extends JComponent {
-    public static int frameSize = 390;
+    public static int frameSize = 420;
     public static int boardSize = 32;
     public static int pixelDimension = 10;
     public static byte offsetX = -1;
@@ -27,16 +27,18 @@ public class Board_Component extends JComponent {
 
     public static Color_Node individual_color_node_for_painting = new Color_Node();
 
-    public static Color_Node current_color_node = new Color_Node("Default");
+    public static Color_Node current_color_node = new Color_Node("BLACK");
 
 
 
-    public void populateBoard(){
+    public static void populateBoard(){
+        Color_Node backgroundColor = new Color_Node(255,255,255);
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
-                Board[i][j] = new Color_Node();
+                Board[i][j] = backgroundColor;
             }
         }
+        Main.frame.repaint();
 
 
     }

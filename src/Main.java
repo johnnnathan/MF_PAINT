@@ -1,8 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements ChangeListener {
 
 
     public static Board_Component Board = new Board_Component();
@@ -15,31 +17,60 @@ public class Main extends JFrame {
     static JButton bRed = new JButton("RED");
     static JButton bGreen = new JButton("GREEN");
     static JButton bBlue = new JButton("BLUE");
+    static JButton resetButton = new JButton("RESET");
+    static JSlider jsliderRed = new JSlider(JSlider.VERTICAL,0,255, 255);
 
+    static JSlider jsliderGreen = new JSlider(JSlider.VERTICAL,0,255, 255);
+
+    static JSlider jsliderBlue = new JSlider(JSlider.VERTICAL,0,255, 255);
     static JPanel jpanel = new JPanel();
+    static JPanel sliderPanel = new JPanel();
+    static JPanel valuePanel = new JPanel();
+
+
+    static JPanel valuesAndSlidersPanel = new JPanel();
+    static JTextArea valuesText = new JTextArea("Red:" + jsliderRed.getValue() + "\n"+
+                                         "Green:"+ jsliderGreen.getValue() +"\n"+
+                                         "Blue:" + jsliderBlue.getValue() + "\n");
+
+
 
 
     public static void main(String[] args) throws InterruptedException {
 
 
+        jsliderRed.addChangeListener(new Main());
+        jsliderGreen.addChangeListener(new Main());
+        jsliderBlue.addChangeListener(new Main());
+        valuesText.setOpaque(false);
+
         BoxLayout boxLayout = new BoxLayout(jpanel, BoxLayout.X_AXIS);
+        valuesAndSlidersPanel.setLayout(new BoxLayout(valuesAndSlidersPanel, BoxLayout.Y_AXIS));
         jpanel.add(bRed);
         jpanel.add(bBlue);
         jpanel.add(bGreen);
+        jpanel.add(resetButton);
         InitializeButtons();
         jpanel.setLayout(boxLayout);
         frame.addMouseMotionListener(mouseAdapter);
         Board.setDoubleBuffered(true);
+        sliderPanel.add(jsliderRed, BorderLayout.EAST);
+        sliderPanel.add(jsliderBlue, BorderLayout.CENTER);
+        sliderPanel.add(jsliderGreen, BorderLayout.WEST);
+        valuesAndSlidersPanel.add(sliderPanel);
+        valuesAndSlidersPanel.add(valuesText);
+        frame.add(valuesAndSlidersPanel, BorderLayout.EAST);
+
 
         bRed.addComponentListener(componentListener);
         bBlue.addComponentListener(componentListener);
         bGreen.addComponentListener(componentListener);
-        frame.setBackground(Color.darkGray);
+        frame.setBackground(Color.DARK_GRAY);
 
         frame.addComponentListener(componentListener);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setTitle("MF_PAINT");
-        frame.setSize(Board_Component.frameSize, Board_Component.frameSize);
+        frame.setSize(Board_Component.frameSize, (int) ( Board_Component.frameSize*0.92));
         frame.setVisible(true);
         frame.add(Board, BorderLayout.CENTER);
         frame.add(jpanel, BorderLayout.NORTH);
@@ -70,6 +101,22 @@ public class Main extends JFrame {
                 Board_Component.current_color_node = new Color_Node("Blue");
             }
         });
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Board_Component.populateBoard();
+            }
+        });
+
+
+    }
+    public void stateChanged(ChangeEvent e){
+        valuesText.setText("Red:" + jsliderRed.getValue() + "\n" +
+                "Green:" + jsliderGreen.getValue() + "\n" +
+                "Blue:" + jsliderBlue.getValue() + "\n");
+
+        Board_Component.current_color_node = new Color_Node(jsliderRed.getValue(),jsliderGreen.getValue(),jsliderBlue.getValue());
+
     }
 
 }
