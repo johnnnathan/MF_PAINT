@@ -6,11 +6,12 @@ public class Mouse_Adapter extends MouseAdapter {
     @Override
     public void mouseDragged(MouseEvent e) {
 
-        Board_Component.drawDragged(e.getX(),e.getY());
+        Board_Component.drawPixel(e.getX(),e.getY());
 
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
+        Board_Component.drawPixel(e.getX(),e.getY());
     }
 }

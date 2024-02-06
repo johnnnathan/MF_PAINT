@@ -1,6 +1,6 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.BorderLayout;
 
 public class Main extends JFrame {
 
@@ -34,15 +34,16 @@ public class Main extends JFrame {
         bRed.addComponentListener(componentListener);
         bBlue.addComponentListener(componentListener);
         bGreen.addComponentListener(componentListener);
+        frame.setBackground(Color.darkGray);
 
         frame.addComponentListener(componentListener);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setTitle("MF_PAINT");
-        frame.setSize(Board_Component.size, Board_Component.size);
+        frame.setSize(Board_Component.frameSize, Board_Component.frameSize);
         frame.setVisible(true);
         frame.add(Board, BorderLayout.CENTER);
-        frame.add(jpanel, BorderLayout.SOUTH);
-        frame.setResizable(false);
+        frame.add(jpanel, BorderLayout.NORTH);
+        frame.setResizable(true);
         Board.populateBoard();
 
 
