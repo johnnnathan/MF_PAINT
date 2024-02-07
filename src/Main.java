@@ -10,7 +10,6 @@ public class Main extends JFrame implements ChangeListener {
     public static Board_Component Board = new Board_Component();
     static Component_Listener componentListener = new Component_Listener();
     public static JFrame frame = new JFrame();
-    static Mouse_Adapter mouseAdapter = new Mouse_Adapter();
     public static int mouseX = 0;
     public static int mouseY = 0;
     public static boolean pressed = false;
@@ -30,8 +29,8 @@ public class Main extends JFrame implements ChangeListener {
 
     static JPanel valuesAndSlidersPanel = new JPanel();
     static JTextArea valuesText = new JTextArea("Red:" + jsliderRed.getValue() + "\n"+
-                                         "Green:"+ jsliderGreen.getValue() +"\n"+
-                                         "Blue:" + jsliderBlue.getValue() + "\n");
+            "Green:"+ jsliderGreen.getValue() +"\n"+
+            "Blue:" + jsliderBlue.getValue() + "\n");
 
 
 
@@ -56,7 +55,6 @@ public class Main extends JFrame implements ChangeListener {
 
         InitializeButtons();
         jpanel.setLayout(boxLayout);
-        frame.addMouseMotionListener(mouseAdapter);
         Board.setDoubleBuffered(true);
         sliderPanel.add(jsliderRed, BorderLayout.EAST);
         sliderPanel.add(jsliderBlue, BorderLayout.CENTER);
@@ -69,6 +67,7 @@ public class Main extends JFrame implements ChangeListener {
         bBlue.addComponentListener(componentListener);
         bGreen.addComponentListener(componentListener);
         frame.setBackground(Color.DARK_GRAY);
+
 
         frame.addComponentListener(componentListener);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

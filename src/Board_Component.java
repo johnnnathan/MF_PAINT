@@ -1,13 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.math.*;
 
 public class Board_Component extends JComponent {
-    public static int frameSize = 420;
+    static Mouse_Adapter mouseAdapter = new Mouse_Adapter();
+
+
+    public static int frameSize = 840;
     public static int boardSize = 32;
-    public static int pixelDimension = 10;
+    public static int pixelDimension = 20;
     public static byte offsetX = -1;
     public static byte offsetY = -6;
     Random random = new Random();
@@ -29,6 +34,27 @@ public class Board_Component extends JComponent {
 
     public static Color_Node current_color_node = new Color_Node("BLACK");
 
+
+    public Board_Component() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / pixelDimension;
+                int y = e.getY() / pixelDimension;
+                Board[x][y] = current_color_node;
+                repaint();
+            }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getX() / pixelDimension;
+                int y = e.getY() / pixelDimension;
+                Board[x][y] = current_color_node;
+                repaint();
+            }
+        });
+    }
 
 
     public static void populateBoard(){
@@ -62,6 +88,8 @@ public class Board_Component extends JComponent {
                 x =  i* pixelDimension; //this variable can be used to fit the board to the screen, BUT it needs to be in the same ratio
                 y = j * pixelDimension;
                 g.fillRect(x,y,pixelDimension,pixelDimension);
+                g.setColor(Color.BLACK);
+                g.drawRect(x,y,pixelDimension,pixelDimension);
             }
         }
 
@@ -102,7 +130,7 @@ public class Board_Component extends JComponent {
 //                Board[i][j] = current_color_node;
 //            }
 //        }
-        Board[x+offsetX][y+offsetY] = current_color_node;
+        Board[x][y] = current_color_node;
 
 //        Main.frame.repaint(mouseX-40,mouseY-40,100,100);
         Main.frame.repaint();
