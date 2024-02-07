@@ -39,6 +39,8 @@ public class Main extends JFrame implements ChangeListener {
     public static void main(String[] args) throws InterruptedException {
 
 
+        coloredPanel jpanelColorBox = new coloredPanel();
+
         jsliderRed.addChangeListener(new Main());
         jsliderGreen.addChangeListener(new Main());
         jsliderBlue.addChangeListener(new Main());
@@ -50,6 +52,8 @@ public class Main extends JFrame implements ChangeListener {
         jpanel.add(bBlue);
         jpanel.add(bGreen);
         jpanel.add(resetButton);
+        jpanel.add(jpanelColorBox);
+
         InitializeButtons();
         jpanel.setLayout(boxLayout);
         frame.addMouseMotionListener(mouseAdapter);
@@ -60,7 +64,6 @@ public class Main extends JFrame implements ChangeListener {
         valuesAndSlidersPanel.add(sliderPanel);
         valuesAndSlidersPanel.add(valuesText);
         frame.add(valuesAndSlidersPanel, BorderLayout.EAST);
-
 
         bRed.addComponentListener(componentListener);
         bBlue.addComponentListener(componentListener);
@@ -111,11 +114,14 @@ public class Main extends JFrame implements ChangeListener {
 
     }
     public void stateChanged(ChangeEvent e){
+        frame.repaint();
         valuesText.setText("Red:" + jsliderRed.getValue() + "\n" +
                 "Green:" + jsliderGreen.getValue() + "\n" +
                 "Blue:" + jsliderBlue.getValue() + "\n");
 
         Board_Component.current_color_node = new Color_Node(jsliderRed.getValue(),jsliderGreen.getValue(),jsliderBlue.getValue());
+
+
 
     }
 

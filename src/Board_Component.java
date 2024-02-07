@@ -46,7 +46,7 @@ public class Board_Component extends JComponent {
     @Override
     public void paintComponent(Graphics g) {
 
-        super.paintComponent(g);
+
 
 
         for (int i = 0; i < boardSize; i++){
