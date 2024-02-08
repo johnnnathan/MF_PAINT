@@ -1,20 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.math.*;
 
 public class Board_Component extends JComponent {
-    static Mouse_Adapter mouseAdapter = new Mouse_Adapter();
-
 
     public static int frameSize = 840;
     public static int boardSize = 32;
     public static int pixelDimension = 20;
-    public static byte offsetX = -1;
-    public static byte offsetY = -6;
+
     Random random = new Random();
     static Color_Node[][] Board = new Color_Node[boardSize][boardSize];
 
@@ -27,8 +29,9 @@ public class Board_Component extends JComponent {
     public static int red;
     public static  int blue;
     public static  int green;
-    public static  int x;
-    public static  int y;
+
+    public static int lastX;
+    public static int lastY;
 
     public static Color_Node individual_color_node_for_painting = new Color_Node();
 
@@ -39,19 +42,46 @@ public class Board_Component extends JComponent {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+
                 int x = e.getX() / pixelDimension;
                 int y = e.getY() / pixelDimension;
+
+                if (e.isShiftDown()){drawFill(x,y);}
+
                 Board[x][y] = current_color_node;
+
                 repaint();
             }
         });
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                int x = e.getX() / pixelDimension;
-                int y = e.getY() / pixelDimension;
+                int x = (e.getX() / pixelDimension);
+                int y = (e.getY() / pixelDimension);
                 Board[x][y] = current_color_node;
+
+
                 repaint();
+            }
+        });
+
+        addKeyListener(new KeyListener() {
+
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+//                if (e.getKeyCode() == KeyEvent.VK_F){fillGap();}
             }
         });
     }
@@ -74,6 +104,7 @@ public class Board_Component extends JComponent {
 
 
 
+        int x,y;
 
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
@@ -94,46 +125,21 @@ public class Board_Component extends JComponent {
         }
 
     }
-    public static void drawClick(int mouseX, int mouseY) throws ArrayIndexOutOfBoundsException, InterruptedException {
+    public static void drawFill(int x, int y) {
 
-        int startX = 0;
-        int startY = 0;
-        int endX = 0;
-        int endY = 0;
-
-
-        startX = mouseX - (brushSize/2) - 17;
-        startY = mouseY - (brushSize/2) - 40;
-        endX = mouseX + (brushSize/2) - 17;
-        endY = mouseY + (brushSize/2) - 40;
-
-
-        for (int i = startX; i<endX; i++){
-            for (int j = startY; j < endY; j++){
-                Board[i][j] = current_color_node;
-            }
+        if (x < 0 || x >= boardSize || y < 0 || y >= boardSize || Board[x][y].compareColors(current_color_node) ) {
+            return;
         }
-
-        Main.frame.repaint(startX + 20, startY + 20, brushSize *2, brushSize*2);
-        Thread.sleep(100);
-
-
-    }
-    public static void drawPixel(int mouseX, int mouseY){
-
-
-        int x = mouseX/pixelDimension;
-        int y = mouseY/pixelDimension;
-
-//        for (int i = startX; i< endX; i++){
-//            for (int j = startY; j < endY; j++){
-//                Board[i][j] = current_color_node;
-//            }
-//        }
         Board[x][y] = current_color_node;
-
-//        Main.frame.repaint(mouseX-40,mouseY-40,100,100);
-        Main.frame.repaint();
+        drawFill(x - 1, y);
+        drawFill(x + 1, y);
+        drawFill(x, y+1);
+        drawFill(x, y-1);
 
     }
+
+
+
+
+
 }

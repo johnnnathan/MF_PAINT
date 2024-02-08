@@ -52,6 +52,11 @@ public class Color_Node {
 
     public int getGreen(){return green;}
 
+    public boolean compareColors(Color_Node compared){
+        if (this.getBlue() == compared.getBlue() && this.getRed() == compared.getRed() && this.getGreen() == compared.getGreen()){return true;}
+        return false;
+    }
+
 
 
 }
