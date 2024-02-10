@@ -57,6 +57,10 @@ public class Color_Node {
         return false;
     }
 
+    public int getRGB() {
+        return (red << 16) | (green << 8) | blue;
+    }
+
 
 
 }

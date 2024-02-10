@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,10 +48,21 @@ public class Board_Component extends JComponent {
                 int y = e.getY() / pixelDimension;
 
                 if (e.isShiftDown()){drawFill(x,y);}
-
+                if (e.isAltDown()){
+                    try {
+                        CreateImage.CreateImageFromBoard();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
                 Board[x][y] = current_color_node;
 
                 repaint();
+                try {
+                    WriteToFile.WriteBoardToFile();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         addMouseMotionListener(new MouseAdapter() {
@@ -62,28 +74,11 @@ public class Board_Component extends JComponent {
 
 
                 repaint();
+
             }
         });
 
-        addKeyListener(new KeyListener() {
 
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-//                if (e.getKeyCode() == KeyEvent.VK_F){fillGap();}
-            }
-        });
     }
 
 
