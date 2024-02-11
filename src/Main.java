@@ -3,6 +3,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class Main extends JFrame implements ChangeListener {
 
@@ -17,11 +18,13 @@ public class Main extends JFrame implements ChangeListener {
     static JButton bGreen = new JButton("GREEN");
     static JButton bBlue = new JButton("BLUE");
     static JButton resetButton = new JButton("RESET");
-    static JSlider jsliderRed = new JSlider(JSlider.VERTICAL,0,255, 255);
+    static JButton saveButton = new JButton("SAVE");
+    static JButton dimensionButton = new JButton("Change Dimension");
+    static JSlider jsliderRed = new JSlider(JSlider.VERTICAL,0,255, 0);
 
-    static JSlider jsliderGreen = new JSlider(JSlider.VERTICAL,0,255, 255);
+    static JSlider jsliderGreen = new JSlider(JSlider.VERTICAL,0,255, 0);
 
-    static JSlider jsliderBlue = new JSlider(JSlider.VERTICAL,0,255, 255);
+    static JSlider jsliderBlue = new JSlider(JSlider.VERTICAL,0,255, 0);
     static JPanel jpanel = new JPanel();
     static JPanel sliderPanel = new JPanel();
     static JPanel valuePanel = new JPanel();
@@ -51,14 +54,16 @@ public class Main extends JFrame implements ChangeListener {
         jpanel.add(bBlue);
         jpanel.add(bGreen);
         jpanel.add(resetButton);
+        jpanel.add(dimensionButton);
+        jpanel.add(saveButton);
         jpanel.add(jpanelColorBox);
 
         InitializeButtons();
         jpanel.setLayout(boxLayout);
         Board.setDoubleBuffered(true);
         sliderPanel.add(jsliderRed, BorderLayout.EAST);
-        sliderPanel.add(jsliderBlue, BorderLayout.CENTER);
-        sliderPanel.add(jsliderGreen, BorderLayout.WEST);
+        sliderPanel.add(jsliderGreen, BorderLayout.CENTER);
+        sliderPanel.add(jsliderBlue, BorderLayout.WEST);
         valuesAndSlidersPanel.add(sliderPanel);
         valuesAndSlidersPanel.add(valuesText);
         frame.add(valuesAndSlidersPanel, BorderLayout.EAST);
@@ -107,6 +112,22 @@ public class Main extends JFrame implements ChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Board_Component.populateBoard();
+            }
+        });
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    CreateImage.CreateImageFromBoard();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        dimensionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Dimension_Frame.createDimensionFrame();
             }
         });
 

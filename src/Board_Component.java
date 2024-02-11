@@ -14,9 +14,10 @@ import java.math.*;
 
 public class Board_Component extends JComponent {
 
-    public static int frameSize = 840;
-    public static int boardSize = 32;
-    public static int pixelDimension = 20;
+    public static int frameSize = 1080;
+    public static int boardSize = 128;
+    public static int pixelDimension = 5;
+    public static int boardPixelDimension = 640;
 
     Random random = new Random();
     static Color_Node[][] Board = new Color_Node[boardSize][boardSize];
@@ -48,21 +49,11 @@ public class Board_Component extends JComponent {
                 int y = e.getY() / pixelDimension;
 
                 if (e.isShiftDown()){drawFill(x,y);}
-                if (e.isAltDown()){
-                    try {
-                        CreateImage.CreateImageFromBoard();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
+
                 Board[x][y] = current_color_node;
 
                 repaint();
-                try {
-                    WriteToFile.WriteBoardToFile();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+
             }
         });
         addMouseMotionListener(new MouseAdapter() {
@@ -115,7 +106,7 @@ public class Board_Component extends JComponent {
                 y = j * pixelDimension;
                 g.fillRect(x,y,pixelDimension,pixelDimension);
                 g.setColor(Color.BLACK);
-                g.drawRect(x,y,pixelDimension,pixelDimension);
+//                g.drawRect(x,y,pixelDimension,pixelDimension);
             }
         }
 
