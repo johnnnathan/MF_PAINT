@@ -3,6 +3,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main extends JFrame implements ChangeListener {
@@ -19,6 +20,7 @@ public class Main extends JFrame implements ChangeListener {
     static JButton bBlue = new JButton("BLUE");
     static JButton resetButton = new JButton("RESET");
     static JButton saveButton = new JButton("SAVE");
+    static JButton importButton = new JButton("IMPORT");
     static JButton dimensionButton = new JButton("Change Dimension");
     static JSlider jsliderRed = new JSlider(JSlider.VERTICAL,0,255, 0);
 
@@ -56,6 +58,7 @@ public class Main extends JFrame implements ChangeListener {
         jpanel.add(resetButton);
         jpanel.add(dimensionButton);
         jpanel.add(saveButton);
+        jpanel.add(importButton);
         jpanel.add(jpanelColorBox);
 
         InitializeButtons();
@@ -128,6 +131,26 @@ public class Main extends JFrame implements ChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Dimension_Frame.createDimensionFrame();
+            }
+        });
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FileManager.WriteBoardToFile();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        importButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FileManager.ImportBoard();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
