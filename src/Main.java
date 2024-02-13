@@ -19,9 +19,12 @@ public class Main extends JFrame implements ChangeListener {
     static JButton bGreen = new JButton("GREEN");
     static JButton bBlue = new JButton("BLUE");
     static JButton resetButton = new JButton("RESET");
-    static JButton saveButton = new JButton("SAVE");
+    static JButton exportButton = new JButton("EXPORT");
     static JButton importButton = new JButton("IMPORT");
-    static JButton dimensionButton = new JButton("Change Dimension");
+    static JButton dimensionButton = new JButton("CHANGE DIMENSION");
+    static JButton undoButton = new JButton("UNDO");
+    static JButton saveButton = new JButton("SAVE CURRENT STATE");
+    static JButton redoButton = new JButton("REDO");
     static JSlider jsliderRed = new JSlider(JSlider.VERTICAL,0,255, 0);
 
     static JSlider jsliderGreen = new JSlider(JSlider.VERTICAL,0,255, 0);
@@ -57,8 +60,12 @@ public class Main extends JFrame implements ChangeListener {
         jpanel.add(bGreen);
         jpanel.add(resetButton);
         jpanel.add(dimensionButton);
-        jpanel.add(saveButton);
+        jpanel.add(exportButton);
         jpanel.add(importButton);
+        jpanel.add(undoButton);
+        jpanel.add(saveButton);
+        jpanel.add(redoButton);
+
         jpanel.add(jpanelColorBox);
 
         InitializeButtons();
@@ -85,6 +92,9 @@ public class Main extends JFrame implements ChangeListener {
         frame.add(Board, BorderLayout.CENTER);
         frame.add(jpanel, BorderLayout.NORTH);
         frame.setResizable(true);
+
+
+
         Board.populateBoard();
 
 
@@ -117,7 +127,7 @@ public class Main extends JFrame implements ChangeListener {
                 Board_Component.populateBoard();
             }
         });
-        saveButton.addActionListener(new ActionListener() {
+        exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -133,7 +143,7 @@ public class Main extends JFrame implements ChangeListener {
                 Dimension_Frame.createDimensionFrame();
             }
         });
-        saveButton.addActionListener(new ActionListener() {
+        exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -151,6 +161,25 @@ public class Main extends JFrame implements ChangeListener {
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Board_Component.undoState();
+            }
+        });
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Board_Component.saveState();
+            }
+        });
+        redoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Board_Component.redoState();
             }
         });
 

@@ -17,7 +17,7 @@ public class Board_Component extends JComponent{
     public static int boardPixelDimension = 640;
     static boolean first = true;
 
-
+    static List<Color_Node[][]> stateList = new ArrayList<Color_Node[][]>();
     Random random = new Random();
     static Color_Node[][] Board = new Color_Node[boardSize][boardSize];
 
@@ -26,6 +26,8 @@ public class Board_Component extends JComponent{
     public static  int blue;
     public static  int green;
     static int lastX,lastY,currentX,currentY;
+
+    static int indexState = 0;
 
 
 
@@ -62,8 +64,11 @@ public class Board_Component extends JComponent{
                     if (Math.abs(lastX - currentX) > 1 || Math.abs(lastY - currentY) > 1) {
                         new Thread(new Runnable() {
                             public void run() {
+
                                 interpolateBoard(lastPoint, currentPoint);
+
                             }
+
                         }).start();
                     }
                 }
@@ -161,6 +166,41 @@ public class Board_Component extends JComponent{
             x += xIncrement;
             y += yIncrement;
         }
+
+    }
+
+    public static void saveState(){
+
+        Color_Node[][] copy = new Color_Node[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++){
+            for (int j = 0; j < boardSize; j++){
+                copy[i][j] = Board[i][j];
+            }
+        }
+
+        stateList.subList(indexState, stateList.size()).clear();
+        stateList.add(indexState, copy);
+        indexState++;
+        
+
+    }
+    public static void undoState(){
+
+        if (indexState > 0){
+            indexState--;
+            Board = stateList.get(indexState);
+            Main.frame.repaint();
+        }
+        else {JOptionPane.showMessageDialog(null,"There is no previous state to revert to");}
+    }
+    public static void redoState(){
+        if (indexState < stateList.size() - 1){
+            indexState++;
+            Board = stateList.get(indexState);
+            Main.frame.repaint();
+        }
+        else {JOptionPane.showMessageDialog(null,"This is the last saved state");}
+
 
     }
 
