@@ -22,18 +22,16 @@ public class Board_Component extends JComponent{
     static Color_Node[][] Board = new Color_Node[boardSize][boardSize];
 
 
-    public static int red;
-    public static  int blue;
-    public static  int green;
+
     static int lastX,lastY,currentX,currentY;
 
     static int indexState = 0;
 
 
 
-    public static Color_Node individual_color_node_for_painting = new Color_Node();
+    static Color_Node individual_color_node_for_painting = new Color_Node();
 
-    public static Color_Node current_color_node = new Color_Node("BLACK");
+    static Color_Node current_color_node = new Color_Node("BLACK");
 
     public static long startTimer = 0;
 
@@ -110,14 +108,14 @@ public class Board_Component extends JComponent{
 
 
 
-        int x,y;
+        int red, green,blue,x,y;
 
         for (int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++){
                 individual_color_node_for_painting = Board[i][j];
-                red = individual_color_node_for_painting.red;
-                green = individual_color_node_for_painting.green;
-                blue = individual_color_node_for_painting.blue;
+                red = individual_color_node_for_painting.getRed();
+                green = individual_color_node_for_painting.getGreen();
+                blue = individual_color_node_for_painting.getBlue();
                 Color color = new Color(red,green,blue);
 //                Color color1 = new Color()
 

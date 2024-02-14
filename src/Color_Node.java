@@ -1,8 +1,8 @@
 import java.util.Random;
 public class Color_Node {
-    public int red;
-    public int green;
-    public int blue;
+    private int red;
+    private int green;
+    private int blue;
     public Color_Node(){
         Random random = new Random();
         red = random.nextInt(256);

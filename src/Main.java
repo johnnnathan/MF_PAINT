@@ -10,10 +10,9 @@ public class Main extends JFrame implements ChangeListener {
 
 
     public static Board_Component Board = new Board_Component();
-    static Component_Listener componentListener = new Component_Listener();
-    public static JFrame frame = new JFrame();
-    public static int mouseX = 0;
-    public static int mouseY = 0;
+    static JFrame frame = new JFrame();
+    static int mouseX = 0;
+    static int mouseY = 0;
     public static boolean pressed = false;
     static JButton bRed = new JButton("RED");
     static JButton bGreen = new JButton("GREEN");
@@ -78,13 +77,11 @@ public class Main extends JFrame implements ChangeListener {
         valuesAndSlidersPanel.add(valuesText);
         frame.add(valuesAndSlidersPanel, BorderLayout.EAST);
 
-        bRed.addComponentListener(componentListener);
-        bBlue.addComponentListener(componentListener);
-        bGreen.addComponentListener(componentListener);
+
         frame.setBackground(Color.DARK_GRAY);
 
 
-        frame.addComponentListener(componentListener);
+
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setTitle("MF_PAINT");
         frame.setSize(Board_Component.frameSize, (int) ( Board_Component.frameSize*0.92));
