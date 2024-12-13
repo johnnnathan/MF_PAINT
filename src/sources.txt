@@ -1,0 +1,8 @@
+./coloredPanel.java
+./Board_Component.java
+./Color_Node.java
+./CreateImage.java
+./Point.java
+./FileManager.java
+./Main.java
+./Dimension_Frame.java
